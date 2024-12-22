@@ -1,6 +1,6 @@
 package core
 
-var RequestBody struct {
+type RequestBody struct {
 	Expression string `json:"expression"`
 }
 
