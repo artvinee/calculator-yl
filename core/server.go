@@ -8,12 +8,13 @@ import (
 
 func StartServer() {
 	http.HandleFunc("/api/v1/calculate", func(w http.ResponseWriter, r *http.Request) {
-		if err := json.NewDecoder(r.Body).Decode(&RequestBody); err != nil {
+		var req RequestBody
+		if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 			http.Error(w, "Invalid request payload", http.StatusBadRequest)
 			return
 		}
-		expression := RequestBody.Expression
-		result, err := CalculateExpression(expression)
+
+		result, err := CalculateExpression(req.Expression)
 		if err != nil {
 			w.WriteHeader(http.StatusUnprocessableEntity)
 			w.Header().Set("Content-Type", "application/json")
